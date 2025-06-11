@@ -49,7 +49,7 @@ Mad Lions App is an **Android application** that allows users to **discover, add
 
 ## Demo Video
 
-<a href="https://youtu.be/tJDF_gwds">
+<a href="https://youtu.be/82yUAjC7nMs">
 <img src="/assets/images/LogIn.png" alt="MadLions App video" width="100" /> 
 </a>
 
