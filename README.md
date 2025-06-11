@@ -49,8 +49,8 @@ Mad Lions App is an **Android application** that allows users to **discover, add
 
 ## Demo Video
 
-<a href="https://youtu.be/tJDF_gw2awg">
-<img src="images/LogIn.png" alt="MadLions App video" width="100" /> 
+<a href="https://youtu.be/tJDF_gwds">
+<img src="/assets/images/LogIn.png" alt="MadLions App video" width="100" /> 
 </a>
 
 ## Features
@@ -100,8 +100,8 @@ Mad Lions App is an **Android application** that allows users to **discover, add
 
 ## How to Use
 When you open the app, you’ll see **two main buttons**: Register and Log In.
-- If you don’t have an account yet, tap Register, enter your email and a secure password, then hit Register—you’ll get a confirmation and land straight in the main menu.
-- If you already have credentials, tap Log In, enter your email and password, and you’ll be taken to the same menu.
+- If you don’t have an account yet, tap Register, enter your email and a secure password, then hit Register.
+- If you already have credentials, tap Enterr, enter your email and password, and you’ll be taken to the same menu.
 
 In the main menu you’ll see three buttons: View Map, Add Location, and Sign Out.
 - **Tap Add Location to bring up a form where you type in the fountain’s name and write a short description**. As soon as the app locks onto your GPS signal, the Save Location button becomes active—tap it, and your new fountain will be saved to the community database, with a toast confirming “Location saved.”
@@ -110,7 +110,7 @@ If you prefer a different look, tap the gear‑shaped style button in the top‑
 - When you’re done exploring, return to the main menu and **tap Sign Out to end your session.**
 
 ## Technologies Used
-- ✅ **Kotlin** (Main language)
+- ✅ **Flutter** (Main language)
 - ✅ **Android Jetpack** (ConstraintLayout, Navigation, etc.)
 - ✅ **OpenStreetMap + WebView** (Version without Google dependencies)
 - ✅ Firebase Authentication (Secure login and registration system)
