@@ -14,13 +14,13 @@ class HomeScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(height: 40),
+            const SizedBox(height: 20),
             Text(
               'Menú Principal',
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 28,
-                color: Color.fromARGB(221, 1, 225, 8),
+                color: Color(0xFF4CAF50),
               ),
             ),
             const SizedBox(height: 48),

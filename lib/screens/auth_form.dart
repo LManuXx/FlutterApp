@@ -42,7 +42,6 @@ class _AuthFormState extends State<AuthForm> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Encabezado moderno con el mismo color que los botones
               Text(
                 'Bienvenido',
                 style: const TextStyle(
@@ -52,7 +51,6 @@ class _AuthFormState extends State<AuthForm> {
                 ),
               ),
               const SizedBox(height: 32),
-              // Input de correo con border modificado
               TextField(
                 controller: _emailController,
                 decoration: InputDecoration(
@@ -66,7 +64,6 @@ class _AuthFormState extends State<AuthForm> {
                 ),
               ),
               const SizedBox(height: 16),
-              // Input de contraseña con border modificado
               TextField(
                 controller: _passwordController,
                 obscureText: true,
@@ -81,7 +78,6 @@ class _AuthFormState extends State<AuthForm> {
                 ),
               ),
               const SizedBox(height: 24),
-              // Botón moderno de acción
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF4CAF50),
@@ -97,7 +93,6 @@ class _AuthFormState extends State<AuthForm> {
                 child: Text(_isLogin ? 'Entrar' : 'Registrarse'),
               ),
               const SizedBox(height: 16),
-              // Botón para alternar formulario
               TextButton(
                 onPressed: _toggleForm,
                 child: Text(

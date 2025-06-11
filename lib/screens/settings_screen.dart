@@ -31,7 +31,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Future<void> _setGps(bool val) async {
     if (val) {
       var perm = await Geolocator.requestPermission();
-      if (perm != LocationPermission.always && perm != LocationPermission.whileInUse) return;
+      if (perm != LocationPermission.always &&
+          perm != LocationPermission.whileInUse) return;
     }
     final p = await SharedPreferences.getInstance();
     await p.setBool('locationPermission', val);
@@ -47,23 +48,39 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext ctx) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        children: [
-          Text('Ajustes', style: Theme.of(ctx).textTheme.titleLarge),
-          const SizedBox(height: 16),
-          SwitchListTile(
-            title: const Text('Permiso de ubicación'),
-            value: _gps,
-            onChanged: _setGps,
-          ),
-          SwitchListTile(
-            title: const Text('Modo oscuro'),
-            value: _dark,
-            onChanged: _setDark,
-          ),
-        ],
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Espacio superior ajustado para homogeneizar la altura del título
+            const SizedBox(height: 10),
+            Text(
+              'Ajustes',
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF4CAF50),
+              ),
+            ),
+            const SizedBox(height: 32),
+            SwitchListTile(
+              title: const Text('Permiso de ubicación'),
+              value: _gps,
+              onChanged: _setGps,
+              activeColor: const Color(0xFF4CAF50),
+            ),
+            const SizedBox(height: 16),
+            SwitchListTile(
+              title: const Text('Modo oscuro'),
+              value: _dark,
+              onChanged: _setDark,
+              activeColor: const Color(0xFF4CAF50),
+            ),
+          ],
+        ),
       ),
     );
   }

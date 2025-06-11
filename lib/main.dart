@@ -76,10 +76,10 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     final pages = [
-      HomeScreen(onNavigate: _goToTab),  // HomePage siempre accesible
-      const MapScreen(),                 // Solo accesible si el usuario está logueado
-      const AddFountainScreen(),         // Solo accesible si el usuario está logueado
-      SettingsScreen(onThemeChanged: widget.onThemeChanged),  // Solo accesible si el usuario está logueado
+      HomeScreen(onNavigate: _goToTab),
+      const MapScreen(),
+      AddFountainScreen(onNavigate: _goToTab),
+      SettingsScreen(onThemeChanged: widget.onThemeChanged),
     ];
 
     return Scaffold(
