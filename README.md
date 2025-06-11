@@ -2,7 +2,7 @@
 
 ## Workspace 
 Github:  
-- Repository: https://github.com/LManuXx/KotlinApp
+- Repository: https://github.com/LManuXx/FlutterApp
 - Workspace: https://upm365.sharepoint.com/sites/MADLions
 
 
@@ -14,42 +14,35 @@ Mad Lions App is an **Android application** that allows users to **discover, add
 
 <table>
   <tr>
-    <td>
+    <td style="width:50%; text-align:center; vertical-align: top;">
       <img src="assets/images/LogIn.png" width="100%" alt="Log In"/>
       <p align="center">Login screen with fields for Email and Password, an ENTER button and a "Don't you have an account? Register" link below.</p>
     </td>
-    <td>
-      <img src="assets/images/CreateAccount.png" width="80%" alt="Create Account"/>
-      <p align="center">Create Account screen featuring fields for Email, Password, and Confirm Password (each with visibility toggles), a REGISTER button, a "Log in" link below, an icon at the top‑left and a back‑arrow FAB in the bottom‑left.</p>
+    <td style="width:50%; text-align:center; vertical-align: top;">
+      <img src="assets/images/CreateAccount.png" width="100%" alt="Create Account"/>
+      <p align="center">Create Account screen featuring fields for Email and Password, a REGISTER button and a "Do you already have an account? Log in" link.</p>
     </td>
   </tr>
   <tr>
-    <td>
-      <img src="images/MainMenu.png" width="100%" alt="Main Menu"/>
-      <p align="center">Main Menu, listing four options with icons: Home, Map, Add Fountain, and Settings. A back button in the top‑left closes the drawer.</p>
+    <td style="width:50%; text-align:center; vertical-align: top;">
+      <img src="assets/images/HomeMenu.png" width="100%" alt="Home Menu"/>
+      <p align="center">Main Menu, listing four options with icons: Home, Map, Add Fountain, and Settings and a log out link above.</p>
     </td>
-    <td>
-      <img src="images/AddFountain.png" width="80%" alt="Add Fountain"/>
-      <p align="center">Add Fountain screen with an icon and title at the top, input fields for Fountain Name and Description, a placeholder to view/upload a photo, two buttons labeled SELECT PHOTO and SAVE LOCATION and a back button in the bottom‑left.</p>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <img src="images/MapView.png" width="100%" alt="Map View"/>
-      <p align="center">Interactive map view displaying OSM tiles, with a map style button to change it, a back button in the bottom‑left and three stacked buttons for "locate me", "zoom in" and "zoom out".</p>
-    </td>
-    <td>
-      <img src="images/ChangeMapStyle.png" width="80%" alt="Change Map Style"/>
-      <p align="center">Map settings, where map view can change by "OSM", "Satellite" and "Topographic".</p>
+    <td style="width:50%; text-align:center; vertical-align: top;">
+      <img src="assets/images/AddFountain.png" width="100%" alt="Add Fountain"/>
+      <p align="center">Add Fountain screen with input fields for Fountain Name and Description and a save button.</p>
     </td>
   </tr>
   <tr>
-    <td>
-      <img src="images/Settings.png" width="100%" alt="Settings"/>
-      <p align="center">Settings screen showing the email at the top, a Dark Mode toggle, a GPS Permission toggle, a Save button and a Sign Out button, with a back arrow in the toolbar.</p>
+    <td style="width:50%; text-align:center; vertical-align: top;">
+      <img src="assets/images/MapView.png" width="100%" alt="Map View"/>
+      <p align="center">Interactive map view displaying OSM tiles, with two stacked buttons for "locate me", "zoom in" and "zoom out".</p>
+    </td>
+    <td style="width:50%; text-align:center; vertical-align: top;">
+      <img src="assets/images/Settings.png" width="100%" alt="Settings"/>
+      <p align="center">Settings screen showing a Dark Mode toggle, a GPS Permission toggle, a Save button and a Sign Out button.</p>
     </td>
   </tr>
-
 </table>
 
 
@@ -127,5 +120,5 @@ If you prefer a different look, tap the gear‑shaped style button in the top‑
 ## Participants
 List of MAD Lions App developers:
 - Manuel Neto Romero (manuel.neto@alumnos.upm.es)
-- Paul Brayan Rodríguez Isler (paul.rodriguez@alumnos.upm.es)  
+- Paul Brayan Rodríguez Isler (paul.rodriguez@alumnos.upm.es)
 

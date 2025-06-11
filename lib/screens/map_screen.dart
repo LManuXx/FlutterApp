@@ -13,7 +13,9 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   List<Marker> _markers = [];
+  List<Polyline> _polylines = [];
   bool _isLoading = true; // Indicador de carga
+  MapController _mapController = MapController(); // Controlador del mapa
 
   @override
   void initState() {
@@ -37,6 +39,7 @@ class _MapScreenState extends State<MapScreen> {
       }
 
       List<Marker> markers = [];
+      List<LatLng> locationPoints = [];
 
       // Iteramos sobre los documentos de Firestore
       for (var doc in snapshot.docs) {
@@ -65,10 +68,13 @@ class _MapScreenState extends State<MapScreen> {
             ),
           );
           markers.add(marker);
+          locationPoints.add(LatLng(lat, lon)); // Añadir el punto de la fuente
         }
       }
 
-      // Actualizamos el estado con los marcadores cargados
+      // Crear líneas entre fuentes cercanas (menos de 100 km)
+      _createPolylines(locationPoints);
+
       setState(() {
         _markers = markers;
         _isLoading = false; // Detener indicador de carga
@@ -110,6 +116,36 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
+  // Función para crear líneas entre las ubicaciones cercanas (menos de 100 km)
+  void _createPolylines(List<LatLng> locations) {
+    List<Polyline> polylines = [];
+
+    for (int i = 0; i < locations.length; i++) {
+      for (int j = i + 1; j < locations.length; j++) {
+        double distance = _calculateDistance(locations[i], locations[j]);
+
+        // Si la distancia es menor de 100 km, añadimos una línea
+        if (distance < 100.0) {
+          polylines.add(Polyline(
+            points: [locations[i], locations[j]],
+            strokeWidth: 4.0,
+            color: Colors.blue,
+          ));
+        }
+      }
+    }
+
+    setState(() {
+      _polylines = polylines; // Actualizamos las líneas en el estado
+    });
+  }
+
+  // Función para calcular la distancia entre dos puntos (en km)
+  double _calculateDistance(LatLng start, LatLng end) {
+    final Distance distance = Distance();
+    return distance.as(LengthUnit.Kilometer, start, end); // Distancia en kilómetros
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -130,6 +166,7 @@ class _MapScreenState extends State<MapScreen> {
             child: _isLoading
                 ? const Center(child: CircularProgressIndicator()) // Mostrar indicador de carga mientras se cargan los datos
                 : FlutterMap(
+                    mapController: _mapController,
                     options: MapOptions(
                       initialCenter: LatLng(40.4168, -3.7038), // Centro inicial en Madrid
                       initialZoom: 13,
@@ -143,8 +180,30 @@ class _MapScreenState extends State<MapScreen> {
                       MarkerLayer(
                         markers: _markers,
                       ),
+                      // Añadir las polilíneas entre las fuentes cercanas
+                      PolylineLayer(
+                        polylines: _polylines,
+                      ),
                     ],
                   ),
+          ),
+          // Botones de zoom
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.zoom_out),
+                onPressed: () {
+                  _mapController.move(_mapController.camera.center, _mapController.camera.zoom - 1);
+                },
+              ),
+              IconButton(
+                icon: const Icon(Icons.zoom_in),
+                onPressed: () {
+                  _mapController.move(_mapController.camera.center, _mapController.camera.zoom + 1);
+                },
+              ),
+            ],
           ),
           const SizedBox(height: 16),
         ],
