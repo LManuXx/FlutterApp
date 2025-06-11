@@ -15,11 +15,11 @@ Mad Lions App is an **Android application** that allows users to **discover, add
 <table>
   <tr>
     <td>
-      <img src="images/LogIn.png" width="100%" alt="Log In"/>
-      <p align="center">Login screen with fields for Email and Password (and an icon to toggle visibility), a LOG IN button, a "Register" link below, and a back‑arrow FAB in the bottom‑left.</p>
+      <img src="assets/images/LogIn.png" width="100%" alt="Log In"/>
+      <p align="center">Login screen with fields for Email and Password, an ENTER button and a "Don't you have an account? Register" link below.</p>
     </td>
     <td>
-      <img src="images/CreateAccount.png" width="80%" alt="Create Account"/>
+      <img src="assets/images/CreateAccount.png" width="80%" alt="Create Account"/>
       <p align="center">Create Account screen featuring fields for Email, Password, and Confirm Password (each with visibility toggles), a REGISTER button, a "Log in" link below, an icon at the top‑left and a back‑arrow FAB in the bottom‑left.</p>
     </td>
   </tr>

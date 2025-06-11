@@ -38,25 +38,24 @@ class _AddFountainScreenState extends State<AddFountainScreen> {
     });
 
     try {
-      LocationPermission permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
+      LocationPermission permiso = await Geolocator.checkPermission();
+      if (permiso == LocationPermission.denied) {
+        permiso = await Geolocator.requestPermission();
       }
 
-      if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
+      if (permiso == LocationPermission.denied || permiso == LocationPermission.deniedForever) {
         setState(() {
           _isLoading = false;
         });
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Permission denied to access location.')),
+          const SnackBar(content: Text('Permiso denegado para acceder a la ubicación.')),
         );
         return;
       }
 
-      // Obtener la ubicación actual
-      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      Position posicion = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
       setState(() {
-        _location = LatLng(position.latitude, position.longitude);
+        _location = LatLng(posicion.latitude, posicion.longitude);
         _isLocationFetched = true;
         _isLoading = false;
       });
@@ -66,9 +65,9 @@ class _AddFountainScreenState extends State<AddFountainScreen> {
         _isLocationFetched = false;
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Error while fetching location.')),
+        const SnackBar(content: Text('Error al obtener la ubicación.')),
       );
-      print("Error while fetching location: $e");
+      print("Error al obtener la ubicación: $e");
     }
   }
 
@@ -76,143 +75,129 @@ class _AddFountainScreenState extends State<AddFountainScreen> {
   Future<void> _saveLocation() async {
     if (_location == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please wait for location to load.')),
+        const SnackBar(content: Text('Por favor, espera a que se cargue la ubicación.')),
       );
       return;
     }
     if (_nameController.text.isEmpty || _descController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fill in all fields.')),
+        const SnackBar(content: Text('Por favor, completa todos los campos.')),
       );
       return;
     }
 
     try {
-      final user = FirebaseAuth.instance.currentUser;
-      if (user == null) {
+      final usuario = FirebaseAuth.instance.currentUser;
+      if (usuario == null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('User not authenticated. Please log in.')),
+          const SnackBar(content: Text('Usuario no autenticado. Por favor, inicia sesión.')),
         );
         return;
       }
 
       final db = FirebaseFirestore.instance;
-      final locationData = {
+      final datosFuente = {
         'description': _descController.text,
         'latitude': _location!.latitude,
         'longitude': _location!.longitude,
         'name': _nameController.text,
-        'userId': user.uid,
+        'userId': usuario.uid,
       };
 
-      // Guardar la ubicación en Firestore
-      await db.collection('locations').add(locationData);
+      await db.collection('locations').add(datosFuente);
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Location successfully added!')),
+        const SnackBar(content: Text('Fuente añadida correctamente!')),
       );
 
-      // Redirigir a la pantalla del mapa
-      widget.onNavigate(2); // Llamar a la función de navegación y pasar el índice de la pantalla
-
+      widget.onNavigate(2);
     } catch (e) {
       setState(() {
         _isLoading = false;
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Error while saving location.')),
+        const SnackBar(content: Text('Error al guardar la fuente.')),
       );
-      print("Error while saving location: $e");
+      print("Error al guardar la fuente: $e");
 
-      // En caso de error, redirigir a la pantalla del mapa
-      widget.onNavigate(2); // También puedes redirigir en caso de error
+      widget.onNavigate(2);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add Fountain'),
-        backgroundColor: const Color(0xFF4CAF50),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const SizedBox(height: 40),
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const SizedBox(height: 40),
+          Text(
+            'Añadir Fuente',
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF4CAF50),
+            ),
+          ),
+          const SizedBox(height: 32),
+          TextField(
+            controller: _nameController,
+            decoration: InputDecoration(
+              labelText: 'Nombre',
+              border: _inputBorder,
+              enabledBorder: _inputBorder,
+              focusedBorder: _inputBorder.copyWith(
+                borderSide: const BorderSide(color: Color(0xFF4CAF50), width: 2),
+              ),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+            ),
+          ),
+          const SizedBox(height: 16),
+          TextField(
+            controller: _descController,
+            decoration: InputDecoration(
+              labelText: 'Descripción',
+              border: _inputBorder,
+              enabledBorder: _inputBorder,
+              focusedBorder: _inputBorder.copyWith(
+                borderSide: const BorderSide(color: Color(0xFF4CAF50), width: 2),
+              ),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+            ),
+          ),
+          const SizedBox(height: 16),
+          if (_isLoading)
+            const Center(child: CircularProgressIndicator())
+          else if (_isLocationFetched && _location != null)
             Text(
-              'Add Fountain',
+              'Ubicación: ${_location!.latitude}, ${_location!.longitude}',
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF4CAF50),
-              ),
+              style: const TextStyle(fontSize: 16),
+            )
+          else
+            const Text(
+              'Ubicación no disponible.',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 16, color: Colors.red),
             ),
-            const SizedBox(height: 24),
-            // Input para el nombre
-            TextField(
-              controller: _nameController,
-              decoration: InputDecoration(
-                labelText: 'Name',
-                border: _inputBorder,
-                enabledBorder: _inputBorder,
-                focusedBorder: _inputBorder.copyWith(
-                  borderSide: const BorderSide(color: Color(0xFF4CAF50), width: 2),
-                ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          const SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: _saveLocation,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF4CAF50),
+              foregroundColor: Colors.white,
+              elevation: 6,
+              padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 20),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
               ),
+              textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 16),
-            // Input para la descripción
-            TextField(
-              controller: _descController,
-              decoration: InputDecoration(
-                labelText: 'Description',
-                border: _inputBorder,
-                enabledBorder: _inputBorder,
-                focusedBorder: _inputBorder.copyWith(
-                  borderSide: const BorderSide(color: Color(0xFF4CAF50), width: 2),
-                ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-              ),
-            ),
-            const SizedBox(height: 16),
-            // Mostrar el estado de la ubicación
-            if (_isLoading)
-              const Center(child: CircularProgressIndicator())
-            else if (_isLocationFetched && _location != null)
-              Text(
-                'Location: ${_location!.latitude}, ${_location!.longitude}',
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 16),
-              )
-            else
-              const Text(
-                'Location not available.',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16, color: Colors.red),
-              ),
-            const SizedBox(height: 16),
-            // Botón para guardar la fuente
-            ElevatedButton(
-              onPressed: _saveLocation,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF4CAF50),
-                foregroundColor: Colors.white,
-                elevation: 6,
-                padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 20),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              child: const Text('Save'),
-            ),
-          ],
-        ),
+            child: const Text('Guardar'),
+          ),
+        ],
       ),
     );
   }
